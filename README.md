@@ -63,11 +63,43 @@ developing your own process.
 - Add a new toy when the toy form is submitted
 
   - How I debugged:
+    - Clicked on the Add a Toy button
+    - Filled in some data for the inputs
+    - Clicked Create a New Toy button
+    - Looked at console error message (Internal Server Error)
+    - Looked at Network response
+      - Saw the 500 Status code (Internal Server Error)
+      - Looked at the Network Preview
+        - Saw "NameError: uninitailized constant ToysController::Toys" exception
+    - Looked at the server log
+      - Saw the same error from the preview and also saw where the error was exactly (app/controllers/toys_controller.rb:10:in 'create')
+    - Updated "Toys.create" to "Toy.create"
+
 
 - Update the number of likes for a toy
 
   - How I debugged:
+    - Clicked "like" on a toy
+    - Read the error in the browser (SyntaxError): Unexpected end of JSON input
+      - Same error in the console
+    - Checked the Network debugger tool and couldn't figure that out
+    - Refreshed page
+    - Read the logs from the two terminals
+    - 204 No Content error - app/controllers/toys_controller.rb:16:in 'update'
+    - checked the controller file
+    - saw there was no json being rendered
+    - added the render json
+      - need to find what the status should be when something was updated
+
+
 
 - Donate a toy to Goodwill (and delete it from our database)
 
   - How I debugged:
+    - Clicked a donate to goodwill button on a toy
+    - Looked at the console error (404 Not Found)
+    - Looked at network preview (ActionController::RoutingError: No route matches delete)
+    - Looke at terminal logs
+    - checked the controller, didn't notice anything
+    - checked the routes and saw there wasn't a destroy listed in the resources
+    - added that
